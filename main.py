@@ -2,8 +2,6 @@ import boto3
 import logging
 import json
 
-logging.getLogger().setLevel(logging.logProcesses)
-
 
 def main():
     while True:
@@ -13,7 +11,6 @@ def main():
             endpoint_url='https://message-queue.api.cloud.yandex.net',
             region_name='ru-central1'
             )
-        
 
         # Receive messages from base queue
         print(1)
@@ -30,12 +27,6 @@ def main():
                 received_msg = json.loads(msg.get('Body').replace("'", '"'))
                 print('Received message: "{}"'.format(msg.get('Body')))
 
-                # body = event['body']
-                #    a = int(body.get("a"))
-                #    return {
-                #        'body':event['body'],
-                #        'summ':a+b
-                #    }
                 temporary_queue_url = received_msg.get('created_queue')
                 # Send message to temporary queue
                 body_text = {'message': 'Success!!!', 'created_queue': temporary_queue_url, 'is_answer': "True"}
@@ -44,9 +35,6 @@ def main():
                     MessageBody=str(body_text)
                 )
                 print('Successfully sent message to temporary queue')
-            # # Delete queue
-            # client.delete_queue(QueueUrl=queue_url)
-            # print('Successfully deleted temporary queue')
 
 
 if __name__ == '__main__':

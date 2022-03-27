@@ -5,8 +5,6 @@ import string
 import json
 
 
-logging.getLogger().setLevel(logging.DEBUG)
-
 def is_iterable_value(x):
     try:
         iter(x)
@@ -15,8 +13,8 @@ def is_iterable_value(x):
     else:
         return True
 
-def main():
 
+def main():
     event = {"body": "TESTING"}
     print(event)
     # Create client
@@ -30,9 +28,6 @@ def main():
     # Create base queue and get its url
     base_queue_url = client.create_queue(QueueName='base_queue').get('QueueUrl')
     print('Created queue url is "{}"'.format(base_queue_url))
-
-
-
 
     # Create temporary queue and get its url
     random_list = [random.choice(string.ascii_lowercase + string.digits if i != 5 else string.ascii_uppercase) for i in
