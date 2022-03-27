@@ -13,7 +13,7 @@ def main():
             endpoint_url='https://message-queue.api.cloud.yandex.net',
             region_name='ru-central1'
             )
-        # base_queue_url = 'https://message-queue.api.cloud.yandex.net/b1g78qvrk6t50ij57gni/dj6000000005ihjg04tj/base_queue'
+        
 
         # Receive messages from base queue
         print(1)
