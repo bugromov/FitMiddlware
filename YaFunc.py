@@ -47,33 +47,29 @@ def main():
     except:
         print('Unsuccessfully sent message to base queue')
     answer = {}
-    break_the_loop = False
     # Receive sent message from temporary queue
-    while True:
 
-        print("while loop")
-        messages = client.receive_message(
-            QueueUrl=created_queue,
-            MaxNumberOfMessages=10,
-            VisibilityTimeout=60,
-            WaitTimeSeconds=20
-        ).get('Messages')
-        if is_iterable_value(messages):
-            for msg in messages:
-                print('Received message: "{}"'.format(msg.get('Body')))
-                answer = msg
-                # Delete queue
-                print('Received message: "{}"'.format(msg.get('Body')))
-                received_body = json.loads(msg.get('Body').replace("'", '"'))
-                is_answer = received_body.get('is_answer')
-                print("type answer: ", type(is_answer))
-                if is_answer == 'True':
-                    client.delete_queue(QueueUrl=created_queue)
-                    print('Successfully deleted temporary queue')
-                    break_the_loop = True
-                    break
-        if break_the_loop:
-            break
+    messages = client.receive_message(
+        QueueUrl=created_queue,
+        MaxNumberOfMessages=10,
+        VisibilityTimeout=60,
+        WaitTimeSeconds=20
+    ).get('Messages')
+    if is_iterable_value(messages):
+        for msg in messages:
+            print('Received message: "{}"'.format(msg.get('Body')))
+            answer = msg
+            # Delete queue
+            print('Received message: "{}"'.format(msg.get('Body')))
+            received_body = json.loads(msg.get('Body').replace("'", '"'))
+            is_answer = received_body.get('is_answer')
+            print("type answer: ", type(is_answer))
+            if is_answer == 'True':
+                client.delete_queue(QueueUrl=created_queue)
+                print('Successfully deleted temporary queue')
+                break_the_loop = True
+                break
+
 
     return answer
 
